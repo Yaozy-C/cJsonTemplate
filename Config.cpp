@@ -4,124 +4,167 @@
 
 #include "Config.h"
 
+
+RfidDev::RfidDev(){
+    port = 0;
+}
+RfidDev::RfidDev(const RfidDev &rfidDev) {
+    id = rfidDev.id;
+    name = rfidDev.name;
+    ip = rfidDev.ip;
+    port = rfidDev.port;
+}
+
+RfidDev & RfidDev::operator=(const RfidDev &rfidDev) {
+    if (this == &rfidDev)
+        return *this;
+    id = rfidDev.id;
+    name = rfidDev.name;
+    ip = rfidDev.ip;
+    port = rfidDev.port;
+    return *this;
+}
+
+RfidDev::~RfidDev() =default;
+
+void RfidDev::DecodeJson(cJSON *reader) {
+    GetJsonValue(reader, "ID", id);
+    GetJsonValue(reader, "Name", name);
+    GetJsonValue(reader, "IP", ip);
+    GetJsonValue(reader, "Port", port);
+
+}
+
+void RfidDev::EncodeJson(cJSON *writer) {
+    AddJsonValue(writer, "ID", id);
+    AddJsonValue(writer, "Name", name);
+    AddJsonValue(writer, "IP", ip);
+    AddJsonValue(writer, "Port", port);
+}
+
+
 IPC::IPC() {
-    _Port = 554;
-    _Channel = 101;
-    _Mode = 0;
+    port = 554;
+    channel = 101;
+    mode = 0;
 }
 
 IPC::~IPC() = default;
 
-IPC::IPC(const IPC & iPC){
-    _Source = iPC._Source;
-    _Usr = iPC._Usr;
-    _Pwd = iPC._Pwd;
-    _IP = iPC._IP;
-    _Port = iPC._Port;
-    _Channel = iPC._Channel;
-    _ID = iPC._ID;
-    _Mode = iPC._Mode;
-    _Name = iPC._Name;
+IPC::IPC(const IPC &iPC) {
+    source = iPC.source;
+    usr = iPC.usr;
+    pwd = iPC.pwd;
+    ip = iPC.ip;
+    port = iPC.port;
+    channel = iPC.channel;
+    id = iPC.id;
+    mode = iPC.mode;
+    name = iPC.name;
 }
 
-IPC & IPC::operator =(const IPC &iPC) {
-    if(this==&iPC)
+IPC &IPC::operator=(const IPC &iPC) {
+    if (this == &iPC)
         return *this;
-    _Source = iPC._Source;
-    _Usr = iPC._Usr;
-    _Pwd = iPC._Pwd;
-    _IP = iPC._IP;
-    _Port = iPC._Port;
-    _Channel = iPC._Channel;
-    _ID = iPC._ID;
-    _Mode = iPC._Mode;
-    _Name = iPC._Name;
+    source = iPC.source;
+    usr = iPC.usr;
+    pwd = iPC.pwd;
+    ip = iPC.ip;
+    port = iPC.port;
+    channel = iPC.channel;
+    id = iPC.id;
+    mode = iPC.mode;
+    name = iPC.name;
     return *this;
 }
+
 void IPC::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"Source",_Source);
-    GetJsonValue(reader,"Usr",_Usr);
-    GetJsonValue(reader,"Pwd",_Pwd);
-    GetJsonValue(reader,"IP",_IP);
-    GetJsonValue(reader,"Port",_Port);
-    GetJsonValue(reader,"Channel",_Channel);
-    GetJsonValue(reader,"ID",_ID);
-    GetJsonValue(reader,"Mode",_Mode);
-    GetJsonValue(reader,"Name",_Name);
+    GetJsonValue(reader, "Source", source);
+    GetJsonValue(reader, "Usr", usr);
+    GetJsonValue(reader, "Pwd", pwd);
+    GetJsonValue(reader, "IP", ip);
+    GetJsonValue(reader, "Port", port);
+    GetJsonValue(reader, "Channel", channel);
+    GetJsonValue(reader, "ID", id);
+    GetJsonValue(reader, "Mode", mode);
+    GetJsonValue(reader, "Name", name);
 }
 
 void IPC::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"Source",_Source);
-    AddJsonValue(writer,"Usr",_Usr);
-    AddJsonValue(writer,"Pwd",_Pwd);
-    AddJsonValue(writer,"IP",_IP);
-    AddJsonValue(writer,"Port",_Port);
-    AddJsonValue(writer,"Channel",_Channel);
-    AddJsonValue(writer,"ID",_ID);
-    AddJsonValue(writer,"Mode",_Mode);
-    AddJsonValue(writer,"Name",_Name);
+    AddJsonValue(writer, "Source", source);
+    AddJsonValue(writer, "Usr", usr);
+    AddJsonValue(writer, "Pwd", pwd);
+    AddJsonValue(writer, "IP", ip);
+    AddJsonValue(writer, "Port", port);
+    AddJsonValue(writer, "Channel", channel);
+    AddJsonValue(writer, "ID", id);
+    AddJsonValue(writer, "Mode", mode);
+    AddJsonValue(writer, "Name", name);
 }
 
 Engine::Engine() {
-    _ID = 0;
+    id = 0;
 }
 
 Engine::~Engine() = default;
 
 
-Engine::Engine(const Engine & engine){
-    _Name = engine._Name;
-    _ID = engine._ID;
-    _AlgorithmType = engine._AlgorithmType;
+Engine::Engine(const Engine &engine) {
+    name = engine.name;
+    id = engine.id;
+    algorithmType = engine.algorithmType;
 }
 
-Engine & Engine::operator =(const Engine &engine) {
-    if(this==&engine)
+Engine &Engine::operator=(const Engine &engine) {
+    if (this == &engine)
         return *this;
-    _Name = engine._Name;
-    _ID = engine._ID;
-    _AlgorithmType = engine._AlgorithmType;
+    name = engine.name;
+    id = engine.id;
+    algorithmType = engine.algorithmType;
     return *this;
 }
+
 void Engine::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"Name",_Name);
-    GetJsonValue(reader,"ID",_ID);
-    GetJsonValue(reader,"AlgorithmType",_AlgorithmType);
+    GetJsonValue(reader, "Name", name);
+    GetJsonValue(reader, "ID", id);
+    GetJsonValue(reader, "AlgorithmType", algorithmType);
 }
 
 void Engine::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"Name",_Name);
-    AddJsonValue(writer,"ID",_ID);
-    AddJsonValue(writer,"AlgorithmType",_AlgorithmType);
+    AddJsonValue(writer, "Name", name);
+    AddJsonValue(writer, "ID", id);
+    AddJsonValue(writer, "AlgorithmType", algorithmType);
 }
 
 
 MyPoint::MyPoint() {
-    _X = 0;
-    _Y = 0;
+    x = 0;
+    y = 0;
 }
+
 MyPoint::~MyPoint() = default;
 
-MyPoint::MyPoint(const MyPoint & point){
-    _X = point._X;
-    _Y = point._Y;
+MyPoint::MyPoint(const MyPoint &point) {
+    x = point.x;
+    y = point.y;
 }
 
-MyPoint & MyPoint::operator =(const MyPoint &point) {
-    if(this==&point)
+MyPoint &MyPoint::operator=(const MyPoint &point) {
+    if (this == &point)
         return *this;
-    _X = point._X;
-    _Y = point._Y;
+    x = point.x;
+    y = point.y;
     return *this;
 }
+
 void MyPoint::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"X",_X);
-    GetJsonValue(reader,"Y",_Y);
+    GetJsonValue(reader, "X", x);
+    GetJsonValue(reader, "Y", y);
 }
 
 void MyPoint::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"X",_X);
-    AddJsonValue(writer,"Y",_Y);
+    AddJsonValue(writer, "X", x);
+    AddJsonValue(writer, "Y", y);
 }
 
 
@@ -130,311 +173,388 @@ Region::Region() = default;
 Region::~Region() = default;
 
 
-Region::Region(const Region & points){
-    _Points = points._Points;
+Region::Region(const Region &region) {
+    points = region.points;
 }
 
-Region & Region::operator =(const Region &points) {
-    if(this==&points)
+Region &Region::operator=(const Region &region) {
+    if (this == &region)
         return *this;
-    _Points = points._Points;
+    points = region.points;
     return *this;
 }
+
 void Region::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"Points",_Points);
+    GetJsonValue(reader, "Points", points);
 }
 
 void Region::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"Points",_Points);
+    AddJsonValue(writer, "Points", points);
 }
 
-DetectArgs::DetectArgs() = default;
+DetectArgs::DetectArgs() {
+    type = 1;
+};
+
 DetectArgs::~DetectArgs() = default;
 
-DetectArgs::DetectArgs(const DetectArgs & detectArgs){
-    _RegionsList = detectArgs._RegionsList;
-    _IPCID = detectArgs._IPCID;
-    _RegionType = detectArgs._RegionType;
+DetectArgs::DetectArgs(const DetectArgs &detectArgs) {
+    regionsList = detectArgs.regionsList;
+    iPCID = detectArgs.iPCID;
+    regionType = detectArgs.regionType;
+    type = detectArgs.type;
 }
 
-DetectArgs & DetectArgs::operator =(const DetectArgs &detectArgs) {
-    if(this==&detectArgs)
+DetectArgs &DetectArgs::operator=(const DetectArgs &detectArgs) {
+    if (this == &detectArgs)
         return *this;
-    _RegionsList = detectArgs._RegionsList;
-    _IPCID = detectArgs._IPCID;
-    _RegionType = detectArgs._RegionType;
+    regionsList = detectArgs.regionsList;
+    iPCID = detectArgs.iPCID;
+    regionType = detectArgs.regionType;
+    type = detectArgs.type;
     return *this;
 }
+
 void DetectArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"IPCID",_IPCID);
-    GetJsonValue(reader,"RegionType",_RegionType);
-    GetJsonValue(reader,"Region",_RegionsList);
+    GetJsonValue(reader, "IPCID", iPCID);
+    GetJsonValue(reader, "RegionType", regionType);
+    GetJsonValue(reader, "Region", regionsList);
+    GetJsonValue(reader, "Type", type);
 }
 
 void DetectArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"IPCID",_IPCID);
-    AddJsonValue(writer,"RegionType",_RegionType);
-    AddJsonValue(writer,"Region",_RegionsList);
+    AddJsonValue(writer, "IPCID", iPCID);
+    AddJsonValue(writer, "RegionType", regionType);
+    AddJsonValue(writer, "Region", regionsList);
+    AddJsonValue(writer, "Type", type);
 }
 
 
 SourceArgs::SourceArgs() {
-    _FrameRate = 0;
+    frameRate = 0;
 };
+
 SourceArgs::~SourceArgs() = default;
 
-SourceArgs::SourceArgs(const SourceArgs & sourceArgs){
-    _FrameRate = sourceArgs._FrameRate;
-    _IPCIDList = sourceArgs._IPCIDList;
+SourceArgs::SourceArgs(const SourceArgs &sourceArgs) {
+    frameRate = sourceArgs.frameRate;
+    iPCIDList = sourceArgs.iPCIDList;
+    rfidDevId = sourceArgs.rfidDevId;
 }
 
-SourceArgs & SourceArgs::operator =(const SourceArgs &sourceArgs) {
-    if(this==&sourceArgs)
+SourceArgs &SourceArgs::operator=(const SourceArgs &sourceArgs) {
+    if (this == &sourceArgs)
         return *this;
-    _FrameRate = sourceArgs._FrameRate;
-    _IPCIDList = sourceArgs._IPCIDList;
+    frameRate = sourceArgs.frameRate;
+    iPCIDList = sourceArgs.iPCIDList;
+    rfidDevId = sourceArgs.rfidDevId;
     return *this;
 }
+
 void SourceArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"FrameRate",_FrameRate);
-    GetJsonValue(reader,"IPCIDs",_IPCIDList);
+    GetJsonValue(reader, "FrameRate", frameRate);
+    GetJsonValue(reader, "IPCIDs", iPCIDList);
+    GetJsonValue(reader, "RfidDevID", rfidDevId);
 }
 
 void SourceArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"FrameRate",_FrameRate);
-    AddJsonValue(writer,"IPCIDs",_IPCIDList);
+    AddJsonValue(writer, "FrameRate", frameRate);
+    AddJsonValue(writer, "IPCIDs", iPCIDList);
+    AddJsonValue(writer, "RfidDevID", rfidDevId);
 }
 
 
 ChooseArgs::ChooseArgs() {
-    _Score = 0;
-    _IntervalSeconds = 0;
-    _AlarmSwitch = false;
+    score = 0;
+    intervalSeconds = 0;
+    alarmSwitch = false;
 };
+
 ChooseArgs::~ChooseArgs() = default;
 
-ChooseArgs::ChooseArgs(const ChooseArgs & chooseArgs){
-    _Score = chooseArgs._Score;
-    _IntervalSeconds = chooseArgs._IntervalSeconds;
-    _AlarmSwitch = chooseArgs._AlarmSwitch;
+ChooseArgs::ChooseArgs(const ChooseArgs &chooseArgs) {
+    score = chooseArgs.score;
+    intervalSeconds = chooseArgs.intervalSeconds;
+    alarmSwitch = chooseArgs.alarmSwitch;
 }
 
-ChooseArgs & ChooseArgs::operator =(const ChooseArgs &chooseArgs) {
-    if(this==&chooseArgs)
+ChooseArgs &ChooseArgs::operator=(const ChooseArgs &chooseArgs) {
+    if (this == &chooseArgs)
         return *this;
-    _Score = chooseArgs._Score;
-    _IntervalSeconds = chooseArgs._IntervalSeconds;
-    _AlarmSwitch = chooseArgs._AlarmSwitch;
+    score = chooseArgs.score;
+    intervalSeconds = chooseArgs.intervalSeconds;
+    alarmSwitch = chooseArgs.alarmSwitch;
     return *this;
 }
+
 void ChooseArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"Score",_Score);
-    GetJsonValue(reader,"IntervalSeconds",_IntervalSeconds);
-    GetJsonValue(reader,"AlarmSwitch",_AlarmSwitch);
+    GetJsonValue(reader, "Score", score);
+    GetJsonValue(reader, "IntervalSeconds", intervalSeconds);
+    GetJsonValue(reader, "AlarmSwitch", alarmSwitch);
 }
 
 void ChooseArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"Score",_Score);
-    AddJsonValue(writer,"IntervalSeconds",_IntervalSeconds);
-    AddJsonValue(writer,"AlarmSwitch",_AlarmSwitch);
+    AddJsonValue(writer, "Score", score);
+    AddJsonValue(writer, "IntervalSeconds", intervalSeconds);
+    AddJsonValue(writer, "AlarmSwitch", alarmSwitch);
 }
 
 VehicleChooseArgs::VehicleChooseArgs() {
-    _PCount = 15;
-    _MaxWaite = 10;
-    _MinLicenseScore = 0.9;
-    _MinCarScore = 0.3;
-    _AreaRatio = 0.6;
-    _Score = 0.6;
-    _IntervalSeconds = 10;
-    _AlarmSwitch = false;
+    pCount = 15;
+    maxWaite = 10;
+    minLicenseScore = 0.9;
+    minCarScore = 0.3;
+    areaRatio = 0.6;
+    score = 0.6;
+    intervalSeconds = 10;
+    alarmSwitch = false;
 };
+
 VehicleChooseArgs::~VehicleChooseArgs() = default;
 
-VehicleChooseArgs::VehicleChooseArgs(const VehicleChooseArgs & chooseArgs){
-    _PCount = chooseArgs._PCount;
-    _MaxWaite = chooseArgs._MaxWaite;
-    _MinLicenseScore = chooseArgs._MinLicenseScore;
-    _MinCarScore = chooseArgs._MinCarScore;
-    _AreaRatio = chooseArgs._AreaRatio;
-    _Score = chooseArgs._Score;
-    _IntervalSeconds = chooseArgs._IntervalSeconds;
-    _AlarmSwitch = chooseArgs._AlarmSwitch;
+VehicleChooseArgs::VehicleChooseArgs(const VehicleChooseArgs &chooseArgs) {
+    pCount = chooseArgs.pCount;
+    maxWaite = chooseArgs.maxWaite;
+    minLicenseScore = chooseArgs.minLicenseScore;
+    minCarScore = chooseArgs.minCarScore;
+    areaRatio = chooseArgs.areaRatio;
+    score = chooseArgs.score;
+    intervalSeconds = chooseArgs.intervalSeconds;
+    alarmSwitch = chooseArgs.alarmSwitch;
 }
 
-VehicleChooseArgs & VehicleChooseArgs::operator =(const VehicleChooseArgs &chooseArgs) {
-    if(this==&chooseArgs)
+VehicleChooseArgs &VehicleChooseArgs::operator=(const VehicleChooseArgs &chooseArgs) {
+    if (this == &chooseArgs)
         return *this;
-    _PCount = chooseArgs._PCount;
-    _MaxWaite = chooseArgs._MaxWaite;
-    _MinLicenseScore = chooseArgs._MinLicenseScore;
-    _MinCarScore = chooseArgs._MinCarScore;
-    _AreaRatio = chooseArgs._AreaRatio;
-    _Score = chooseArgs._Score;
-    _IntervalSeconds = chooseArgs._IntervalSeconds;
-    _AlarmSwitch = chooseArgs._AlarmSwitch;
+    pCount = chooseArgs.pCount;
+    maxWaite = chooseArgs.maxWaite;
+    minLicenseScore = chooseArgs.minLicenseScore;
+    minCarScore = chooseArgs.minCarScore;
+    areaRatio = chooseArgs.areaRatio;
+    score = chooseArgs.score;
+    intervalSeconds = chooseArgs.intervalSeconds;
+    alarmSwitch = chooseArgs.alarmSwitch;
     return *this;
 }
+
 void VehicleChooseArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"PCount",_PCount);
-    GetJsonValue(reader,"MaxWaite",_MaxWaite);
-    GetJsonValue(reader,"MinLicenseScore",_MinLicenseScore);
-    GetJsonValue(reader,"MinCarScore",_MinCarScore);
-    GetJsonValue(reader,"AreaRatio",_AreaRatio);
-    GetJsonValue(reader,"Score",_Score);
-    GetJsonValue(reader,"IntervalSeconds",_IntervalSeconds);
-    GetJsonValue(reader,"AlarmSwitch",_AlarmSwitch);
+    GetJsonValue(reader, "PCount", pCount);
+    GetJsonValue(reader, "MaxWaite", maxWaite);
+    GetJsonValue(reader, "MinLicenseScore", minLicenseScore);
+    GetJsonValue(reader, "MinCarScore", minCarScore);
+    GetJsonValue(reader, "AreaRatio", areaRatio);
+    GetJsonValue(reader, "Score", score);
+    GetJsonValue(reader, "IntervalSeconds", intervalSeconds);
+    GetJsonValue(reader, "AlarmSwitch", alarmSwitch);
 }
 
 void VehicleChooseArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"PCount",_PCount);
-    AddJsonValue(writer,"MaxWaite",_MaxWaite);
-    AddJsonValue(writer,"MinLicenseScore",_MinLicenseScore);
-    AddJsonValue(writer,"MinCarScore",_MinCarScore);
-    AddJsonValue(writer,"AreaRatio",_AreaRatio);
-    AddJsonValue(writer,"Score",_Score);
-    AddJsonValue(writer,"IntervalSeconds",_IntervalSeconds);
-    AddJsonValue(writer,"AlarmSwitch",_AlarmSwitch);
+    AddJsonValue(writer, "PCount", pCount);
+    AddJsonValue(writer, "MaxWaite", maxWaite);
+    AddJsonValue(writer, "MinLicenseScore", minLicenseScore);
+    AddJsonValue(writer, "MinCarScore", minCarScore);
+    AddJsonValue(writer, "AreaRatio", areaRatio);
+    AddJsonValue(writer, "Score", score);
+    AddJsonValue(writer, "IntervalSeconds", intervalSeconds);
+    AddJsonValue(writer, "AlarmSwitch", alarmSwitch);
 }
 
-EngineArgs::EngineArgs() =default;
+EngineArgs::EngineArgs() = default;
+
 EngineArgs::~EngineArgs() = default;
 
-EngineArgs::EngineArgs(const EngineArgs & engineArgs){
-    _ChooseArgs = engineArgs._ChooseArgs;
-    _AlgorithmType = engineArgs._AlgorithmType;
-    _DetectArgsList = engineArgs._DetectArgsList;
+EngineArgs::EngineArgs(const EngineArgs &engineArgs) {
+    chooseArgs = engineArgs.chooseArgs;
+    algorithmType = engineArgs.algorithmType;
+    detectArgsList = engineArgs.detectArgsList;
 }
 
-EngineArgs & EngineArgs::operator =(const EngineArgs &engineArgs) {
-    if(this==&engineArgs)
+EngineArgs &EngineArgs::operator=(const EngineArgs &engineArgs) {
+    if (this == &engineArgs)
         return *this;
-    _ChooseArgs = engineArgs._ChooseArgs;
-    _AlgorithmType = engineArgs._AlgorithmType;
-    _DetectArgsList = engineArgs._DetectArgsList;
+    chooseArgs = engineArgs.chooseArgs;
+    algorithmType = engineArgs.algorithmType;
+    detectArgsList = engineArgs.detectArgsList;
     return *this;
 }
+
 void EngineArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"AlgorithmType",_AlgorithmType);
-    GetJsonValue(reader,"DetectArgs",_DetectArgsList);
-    if (_AlgorithmType == "VehicleDetect"){
+    GetJsonValue(reader, "AlgorithmType", algorithmType);
+    GetJsonValue(reader, "DetectArgs", detectArgsList);
+    if (algorithmType == "VehicleDetect") {
         VehicleChooseArgs Tmp;
-        GetJsonValue(reader,"ChooseArgs",Tmp);
-        _ChooseArgs = Tmp;
-    } else{
+        GetJsonValue(reader, "ChooseArgs", Tmp);
+        chooseArgs = Tmp;
+    } else {
         ChooseArgs Tmp;
-        GetJsonValue(reader,"ChooseArgs",Tmp);
-        _ChooseArgs = Tmp;
+        GetJsonValue(reader, "ChooseArgs", Tmp);
+        chooseArgs = Tmp;
     }
 }
 
 void EngineArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"AlgorithmType",_AlgorithmType);
-    AddJsonValue(writer,"DetectArgs",_DetectArgsList);
-    if (_AlgorithmType == "VehicleDetect"){
-        auto Tmp = any_cast<VehicleChooseArgs>(_ChooseArgs);
-        AddJsonValue(writer,"ChooseArgs",Tmp);
-    } else{
-        auto Tmp = any_cast<ChooseArgs>(_ChooseArgs);
-        AddJsonValue(writer,"ChooseArgs",Tmp);
+    AddJsonValue(writer, "AlgorithmType", algorithmType);
+    AddJsonValue(writer, "DetectArgs", detectArgsList);
+    if (algorithmType == "VehicleDetect" || algorithmType == "CarAlarm") {
+        auto Tmp = any_cast<VehicleChooseArgs>(chooseArgs);
+        AddJsonValue(writer, "ChooseArgs", Tmp);
+    } else {
+        auto Tmp = any_cast<ChooseArgs>(chooseArgs);
+        AddJsonValue(writer, "ChooseArgs", Tmp);
     }
 }
 
-TransmissionArgs::TransmissionArgs() = default;
+TransmissionArgs::TransmissionArgs() {
+    isUpLoad = true;
+    isUpLoadAll = true;
+};
+
 TransmissionArgs::~TransmissionArgs() = default;
 
-TransmissionArgs::TransmissionArgs(const TransmissionArgs & transmissionArgs){
-    _ReportUrl = transmissionArgs._ReportUrl;
-    _Key = transmissionArgs._Key;
-    _ID = transmissionArgs._ID;
-    _Name = transmissionArgs._Name;
+TransmissionArgs::TransmissionArgs(const TransmissionArgs &transmissionArgs) {
+    reportUrl = transmissionArgs.reportUrl;
+    id = transmissionArgs.id;
+    name = transmissionArgs.name;
+    isUpLoad = transmissionArgs.isUpLoad;
+    isUpLoadAll = transmissionArgs.isUpLoadAll;
 }
 
-TransmissionArgs & TransmissionArgs::operator =(const TransmissionArgs &transmissionArgs) {
-    if(this==&transmissionArgs)
+TransmissionArgs &TransmissionArgs::operator=(const TransmissionArgs &transmissionArgs) {
+    if (this == &transmissionArgs)
         return *this;
-    _ReportUrl = transmissionArgs._ReportUrl;
-    _Key = transmissionArgs._Key;
-    _ID = transmissionArgs._ID;
-    _Name = transmissionArgs._Name;
+    reportUrl = transmissionArgs.reportUrl;
+    id = transmissionArgs.id;
+    name = transmissionArgs.name;
+    isUpLoad = transmissionArgs.isUpLoad;
+    isUpLoadAll = transmissionArgs.isUpLoadAll;
     return *this;
 }
+
 void TransmissionArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"ReportUrl",_ReportUrl);
-    GetJsonValue(reader,"Key",_Key);
-    GetJsonValue(reader,"ID",_ID);
-    GetJsonValue(reader,"Name",_Name);
+    GetJsonValue(reader, "ReportUrl", reportUrl);
+    GetJsonValue(reader, "ID", id);
+    GetJsonValue(reader, "Name", name);
+    GetJsonValue(reader, "IsUpLoad", isUpLoad);
+    GetJsonValue(reader, "IsUpLoadAll", isUpLoadAll);
 }
 
 void TransmissionArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"ReportUrl",_ReportUrl);
-    AddJsonValue(writer,"Key",_Key);
-    AddJsonValue(writer,"ID",_ID);
-    AddJsonValue(writer,"Name",_Name);
+    AddJsonValue(writer, "ReportUrl", reportUrl);
+    AddJsonValue(writer, "ID", id);
+    AddJsonValue(writer, "Name", name);
+    AddJsonValue(writer, "IsUpLoad", isUpLoad);
+    AddJsonValue(writer, "IsUpLoadAll", isUpLoadAll);
 }
 
 BusinessArgs::BusinessArgs() = default;
+
 BusinessArgs::~BusinessArgs() = default;
 
-BusinessArgs::BusinessArgs(const BusinessArgs & businessArgs){
-    _ID = businessArgs._ID;
-    _Name = businessArgs._Name;
-    _SourceArgs = businessArgs._SourceArgs;
-    _EngineArgs = businessArgs._EngineArgs;
-    _TransmissionArgsList = businessArgs._TransmissionArgsList;
+BusinessArgs::BusinessArgs(const BusinessArgs &businessArgs) {
+    id = businessArgs.id;
+    name = businessArgs.name;
+    sourceArgs = businessArgs.sourceArgs;
+    engineArgs = businessArgs.engineArgs;
+    transmissionArgsList = businessArgs.transmissionArgsList;
 }
 
-BusinessArgs & BusinessArgs::operator =(const BusinessArgs &businessArgs) {
-    if(this==&businessArgs)
+BusinessArgs &BusinessArgs::operator=(const BusinessArgs &businessArgs) {
+    if (this == &businessArgs)
         return *this;
-    _ID = businessArgs._ID;
-    _Name = businessArgs._Name;
-    _SourceArgs = businessArgs._SourceArgs;
-    _EngineArgs = businessArgs._EngineArgs;
-    _TransmissionArgsList = businessArgs._TransmissionArgsList;
+    id = businessArgs.id;
+    name = businessArgs.name;
+    sourceArgs = businessArgs.sourceArgs;
+    engineArgs = businessArgs.engineArgs;
+    transmissionArgsList = businessArgs.transmissionArgsList;
     return *this;
 }
+
 void BusinessArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"ID",_ID);
-    GetJsonValue(reader,"Name",_Name);
-    GetJsonValue(reader,"SourceArgs",_SourceArgs);
-    GetJsonValue(reader,"EngineArgs",_EngineArgs);
-    GetJsonValue(reader,"TransmissionArgs",_TransmissionArgsList);
+    GetJsonValue(reader, "ID", id);
+    GetJsonValue(reader, "Name", name);
+    GetJsonValue(reader, "SourceArgs", sourceArgs);
+    GetJsonValue(reader, "EngineArgs", engineArgs);
+    GetJsonValue(reader, "TransmissionArgs", transmissionArgsList);
 }
 
 void BusinessArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"ID",_ID);
-    AddJsonValue(writer,"Name",_Name);
-    AddJsonValue(writer,"SourceArgs",_SourceArgs);
-    AddJsonValue(writer,"EngineArgs",_EngineArgs);
-    AddJsonValue(writer,"TransmissionArgs",_TransmissionArgsList);
+    AddJsonValue(writer, "ID", id);
+    AddJsonValue(writer, "Name", name);
+    AddJsonValue(writer, "SourceArgs", sourceArgs);
+    AddJsonValue(writer, "EngineArgs", engineArgs);
+    AddJsonValue(writer, "TransmissionArgs", transmissionArgsList);
+}
+
+AuthArgs::AuthArgs() = default;
+
+AuthArgs::~AuthArgs() = default;
+
+AuthArgs::AuthArgs(const AuthArgs &authArgs) {
+    sn = authArgs.sn;
+    key = authArgs.key;
+}
+
+AuthArgs &AuthArgs::operator=(const AuthArgs &authArgs) {
+    if (this == &authArgs)
+        return *this;
+    sn = authArgs.sn;
+    key = authArgs.key;
+    return *this;
+}
+
+void AuthArgs::DecodeJson(cJSON *reader) {
+    GetJsonValue(reader, "Sn", sn);
+    GetJsonValue(reader, "Key", key);
+}
+
+void AuthArgs::EncodeJson(cJSON *writer) {
+    AddJsonValue(writer, "Sn", sn);
+    AddJsonValue(writer, "Key", key);
 }
 
 DeviceArgs::DeviceArgs() = default;
+
 DeviceArgs::~DeviceArgs() = default;
 
-DeviceArgs::DeviceArgs(const DeviceArgs & deviceArgs){
-    _BusinessList = deviceArgs._BusinessList;
-    _EngineList = deviceArgs._EngineList;
-    _IPCList = deviceArgs._IPCList;
+DeviceArgs::DeviceArgs(const DeviceArgs &deviceArgs) {
+    businessList = deviceArgs.businessList;
+    engineList = deviceArgs.engineList;
+    iPCList = deviceArgs.iPCList;
+    authArgs = deviceArgs.authArgs;
+    rfidDevList = deviceArgs.rfidDevList;
 }
 
-DeviceArgs & DeviceArgs::operator =(const DeviceArgs &deviceArgs) {
-    if(this==&deviceArgs)
+DeviceArgs &DeviceArgs::operator=(const DeviceArgs &deviceArgs) {
+    if (this == &deviceArgs)
         return *this;
-    _BusinessList = deviceArgs._BusinessList;
-    _EngineList = deviceArgs._EngineList;
-    _IPCList = deviceArgs._IPCList;
+    businessList = deviceArgs.businessList;
+    engineList = deviceArgs.engineList;
+    iPCList = deviceArgs.iPCList;
+    authArgs = deviceArgs.authArgs;
+    rfidDevList = deviceArgs.rfidDevList;
     return *this;
 }
+
 void DeviceArgs::DecodeJson(cJSON *reader) {
-    GetJsonValue(reader,"Businesses",_BusinessList);
-    GetJsonValue(reader,"Engines",_EngineList);
-    GetJsonValue(reader,"IPCs",_IPCList);
+    GetJsonValue(reader, "Businesses", businessList);
+    GetJsonValue(reader, "Engines", engineList);
+    GetJsonValue(reader, "IPCs", iPCList);
+    GetJsonValue(reader, "AuthArgs", authArgs);
+    GetJsonValue(reader, "RfidDevs", rfidDevList);
 }
 
 void DeviceArgs::EncodeJson(cJSON *writer) {
-    AddJsonValue(writer,"Businesses",_BusinessList);
-    AddJsonValue(writer,"Engines",_EngineList);
-    AddJsonValue(writer,"IPCs",_IPCList);
+    AddJsonValue(writer, "Businesses", businessList);
+    AddJsonValue(writer, "Engines", engineList);
+    AddJsonValue(writer, "IPCs", iPCList);
+    AddJsonValue(writer, "AuthArgs", authArgs);
+    AddJsonValue(writer, "RfidDevs", rfidDevList);
+}
+
+void Licenses::DecodeJson(cJSON *Reader) {
+    GetJsonValue(Reader,"licenses",data);
+}
+
+void Licenses::EncodeJson(cJSON *Writer) {
+    AddJsonValue(Writer,"licenses",data);
 }

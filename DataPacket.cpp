@@ -3,58 +3,65 @@
 //
 #include "DataPacket.h"
 
-void GetJsonValue(cJSON * Node,string &Value){
-    if (!cJSON_IsNull(Node) && (cJSON_IsString(Node) || cJSON_IsNumber(Node) ))
-        Value = Node->valuestring;
+void GetJsonValue(cJSON *node, string &value) {
+    if (!cJSON_IsNull(node) && (cJSON_IsString(node) || cJSON_IsNumber(node)))
+        value = node->valuestring;
     else
-        Value = "";
+        value = "";
 }
-void GetJsonValue(cJSON * Node,int &Value){
-    if (!cJSON_IsNull(Node) && cJSON_IsNumber(Node))
-        Value = Node->valueint;
+
+void GetJsonValue(cJSON *node, int &value) {
+    if (!cJSON_IsNull(node) && cJSON_IsNumber(node))
+        value = node->valueint;
     else
-        Value = 0;
+        value = 0;
 }
-void GetJsonValue(cJSON * Node,double &Value){
-    if (!cJSON_IsNull(Node) && cJSON_IsNumber(Node))
-        Value = Node->valuedouble;
+
+void GetJsonValue(cJSON *node, double &value) {
+    if (!cJSON_IsNull(node) && cJSON_IsNumber(node))
+        value = node->valuedouble;
     else
-        Value = 0.0;
-}
-void GetJsonValue(cJSON * Node,bool &Value) {
-    Value = cJSON_IsTrue(Node) != 0;
+        value = 0.0;
 }
 
-void GetJsonValue(cJSON * Node,DataPacket &Value){
-    Value.DecodeJson(Node);
+void GetJsonValue(cJSON *node, bool &value) {
+    value = cJSON_IsTrue(node) != 0;
 }
 
-
-cJSON * cJSON_Create(string &Value){
-    return cJSON_CreateString(Value.c_str());
+void GetJsonValue(cJSON *node, DataPacket &value) {
+    value.DecodeJson(node);
 }
 
-cJSON * cJSON_Create(int &Value){
-    return cJSON_CreateNumber(Value);
-}
-cJSON * cJSON_Create(double &Value){
-    return cJSON_CreateNumber(Value);
+cJSON *cJSON_Create(string &value) {
+    return cJSON_CreateString(value.c_str());
 }
 
-cJSON * cJSON_Create(float &Value){
-    return cJSON_CreateNumber(Value);
+cJSON *cJSON_Create(int &value) {
+    return cJSON_CreateNumber(value);
 }
-cJSON * cJSON_Create(bool &Value){
-    return cJSON_CreateBool(Value);
+
+cJSON *cJSON_Create(double &value) {
+    return cJSON_CreateNumber(value);
 }
-cJSON * cJSON_Create(DataPacket &Value){
-    cJSON * Item = Value.CreateWriter();
-    Value.EncodeJson(Item);
+
+cJSON *cJSON_Create(float &value) {
+    return cJSON_CreateNumber(value);
+}
+
+cJSON *cJSON_Create(bool &value) {
+    return cJSON_CreateBool(value);
+}
+
+cJSON *cJSON_Create(DataPacket &value) {
+    cJSON *Item = value.CreateWriter();
+    value.EncodeJson(Item);
     return Item;
 }
+
 void DataPacket::Clear() {
 
 }
+
 string DataPacket::GetJsonText() {
     cJSON *writer = CreateWriter();
     try {
@@ -69,9 +76,9 @@ string DataPacket::GetJsonText() {
     return json;
 }
 
-void DataPacket::SetJsonText(const string &Text) {
+void DataPacket::SetJsonText(const string &text) {
     Clear();
-    cJSON *reader = cJSON_Parse(Text.c_str());
+    cJSON *reader = cJSON_Parse(text.c_str());
     if (reader != nullptr) {
         try {
             DecodeJson(reader);
