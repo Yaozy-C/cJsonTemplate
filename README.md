@@ -1,0 +1,2 @@
+# cJsonTemplate
+基于cJson的模板库，用户的json类继承于DataPacket，需要自行实现Encode和Decode函数，便可自动实现对象序列化与反序列化。
